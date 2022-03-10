@@ -15,56 +15,22 @@ import java.util.Optional;
 public class BewerberController {
 
     @Autowired
-     BewerberRepo bewerberRepo;
-    /*public BewerberController(BewerberRepo bewerberRepo)
-    {
-        this.bewerberRepo=bewerberRepo;
-    }
-    */
-    /*
-    @GetMapping("/")
-    public String index(Model model) {
+    BewerberRepo bewerberRepo;
 
-        // add `message` attribute
-        model.addAttribute("message", "Thank you for visiting.");
-
-        // return view name
-        return "index";
-    }
-
-    @GetMapping("/bewerber/{id}")
-    public String bewerber(@PathVariable int id, Model model)
-    {
-        Optional<Bewerber> bewerber = bewerberRepo.findById(id);
-        model.addAttribute("bewerber",bewerber);
-        return "bewerber";
-    }
-
-    @GetMapping(value = "/bewerber")
-    public String bewerberListe(Model model)
-    {
-        model.addAttribute("bewerberListe",index());
-        return "bewerberListe";
-    }
-*/
     @GetMapping("")
-    public List<Bewerber> index()
-    {
+    public List<Bewerber> index() {
         return bewerberRepo.findAll();
     }
 
     @PostMapping("")
-    public void createBewerber(@RequestBody Bewerber bewerber)
-    {
+    public void createBewerber(@RequestBody Bewerber bewerber) {
         bewerberRepo.save(bewerber);
     }
 
     @PutMapping("/{id}")
-    public void updateBewerber(@PathVariable long id, @RequestBody Bewerber bewerberUpdate)
-    {
-        Optional<Bewerber> bewerber = bewerberRepo.findById( id);
-        if(!bewerber.isPresent())
-        {
+    public void updateBewerber(@PathVariable long id, @RequestBody Bewerber bewerberUpdate) {
+        Optional<Bewerber> bewerber = bewerberRepo.findById(id);
+        if (!bewerber.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bewerber mit dieser id wurde nicht gefunden");
         }
 
@@ -81,12 +47,10 @@ public class BewerberController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBewerber(@PathVariable long id)
-    {
-        Optional<Bewerber> bewerber=bewerberRepo.findById( id);
-        if(bewerber.isPresent())
-        {
-            bewerberRepo.deleteById( id);
+    public void deleteBewerber(@PathVariable long id) {
+        Optional<Bewerber> bewerber = bewerberRepo.findById(id);
+        if (bewerber.isPresent()) {
+            bewerberRepo.deleteById(id);
         }
     }
 

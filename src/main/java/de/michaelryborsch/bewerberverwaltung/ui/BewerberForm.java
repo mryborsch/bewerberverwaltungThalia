@@ -3,6 +3,7 @@ package de.michaelryborsch.bewerberverwaltung.ui;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -20,25 +21,22 @@ import de.michaelryborsch.bewerberverwaltung.backend.model.Bewerber;
 public class BewerberForm extends FormLayout {
 
     private Bewerber bewerber;
-    private BewerberService service;
-    private VerwaltungUI ui;
 
-    private TextField vorname =new TextField("Vorname");
-    private TextField name =new TextField("Nachname");
-    private TextField email =new TextField("E-Mail");
-    private IntegerField telefonNr =new IntegerField("Telefonnummer");
-    private ComboBox<Bewerber.Arbeitszeit> arbeitszeit =new ComboBox("Arbeitszeit");
-    private TextField gewuenschtePosition =new TextField("Gewünschte Position");
-    private NumberField gehaltswunsch =new NumberField("Gewünschtes Gehalt");
-    private ComboBox<Bewerber.Bewerberstatus> bewerberStatus =new ComboBox<>("Bewerber Status");
+    private TextField vorname = new TextField("Vorname");
+    private TextField name = new TextField("Nachname");
+    private TextField email = new TextField("E-Mail");
+    private IntegerField telefonNr = new IntegerField("Telefonnummer");
+    private ComboBox<Bewerber.Arbeitszeit> arbeitszeit = new ComboBox("Arbeitszeit");
+    private TextField gewuenschtePosition = new TextField("Gewünschte Position");
+    private NumberField gehaltswunsch = new NumberField("Gewünschtes Gehalt");
+    private ComboBox<Bewerber.Bewerberstatus> bewerberStatus = new ComboBox<>("Bewerber Status");
     private Button btn_save = new Button("Speichern");
     private Button btn_delete = new Button("Löschen");
-    private Button btn_close = new Button ("Abbrechen");
+    private Button btn_close = new Button("Abbrechen");
 
     private Binder<Bewerber> binder = new BeanValidationBinder<>(Bewerber.class);
 
-    public BewerberForm()
-    {
+    public BewerberForm() {
 
 
         bewerberStatus.setItems(Bewerber.Bewerberstatus.values());
@@ -48,39 +46,41 @@ public class BewerberForm extends FormLayout {
 
         binder.bindInstanceFields(this);
         setSizeUndefined();
-        HorizontalLayout buttons= new HorizontalLayout(btn_save,btn_delete);
-        add(vorname, name, email, telefonNr, arbeitszeit, gewuenschtePosition, gehaltswunsch, bewerberStatus,btn_save,btn_delete);
-        btn_save.addClickListener(e -> validateAndSave());
-        btn_close.addClickListener(e-> fireEvent(new CloseEvent(this)));
-        btn_delete.addClickListener(e->fireEvent(new DeleteEvent(this,bewerber)));
+        HorizontalLayout buttons = new HorizontalLayout(btn_save, btn_delete, btn_close);
+        add(vorname, name, email, telefonNr, arbeitszeit, gewuenschtePosition, gehaltswunsch, bewerberStatus, buttons);
+        configureButtons();
 
 
-        binder.addStatusChangeListener(evt->btn_save.setAutofocus(binder.isValid()));
+        binder.addStatusChangeListener(evt -> btn_save.setAutofocus(binder.isValid()));
 
 
     }
 
-    private void validateAndSave()
-    {
+    private void configureButtons() {
+        btn_save.addClickListener(e -> validateAndSave());
+        btn_close.addClickListener(e -> fireEvent(new CloseEvent(this)));
+        btn_delete.addClickListener(e -> fireEvent(new DeleteEvent(this, bewerber)));
+        btn_save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btn_delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        btn_close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+    }
+
+    private void validateAndSave() {
         try {
             binder.writeBean(bewerber);
-            fireEvent(new SaveEvent(this,bewerber));
+            fireEvent(new SaveEvent(this, bewerber));
         } catch (ValidationException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void setBewerber(Bewerber bewerber)
-    {
+    public void setBewerber(Bewerber bewerber) {
 
-        this.bewerber=bewerber;
+        this.bewerber = bewerber;
         binder.readBean(bewerber);
 
     }
-
-
-
 
 
     public static abstract class BewerberFormEvent extends ComponentEvent<BewerberForm> {

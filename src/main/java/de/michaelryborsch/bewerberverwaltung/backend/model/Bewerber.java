@@ -7,14 +7,13 @@ import javax.validation.constraints.NotNull;
 public class Bewerber {
 
     //@Embeddable
-    public enum Arbeitszeit
-    {
-        Vollzeit("Vollzeit"), Teilzeit("Teilzeit"), Azubi("Azubi"), Werkstudent ("Werkstudent");
+    public enum Arbeitszeit {
+        Vollzeit("Vollzeit"), Teilzeit("Teilzeit"), Azubi("Azubi"), Werkstudent("Werkstudent");
 
         String name;
-        Arbeitszeit(String name)
-        {
-            this.name=name;
+
+        Arbeitszeit(String name) {
+            this.name = name;
         }
 
         public String getName() {
@@ -22,15 +21,14 @@ public class Bewerber {
         }
     }
 
-    public enum Bewerberstatus
-    {
-        Neu ("Neu") , Erstgespräch ("Erstgespräch") , Zweitgespräch ("Zweitgespräch"),
+    public enum Bewerberstatus {
+        Neu("Neu"), Erstgespräch("Erstgespräch"), Zweitgespräch("Zweitgespräch"),
         Angebot("Angebot-Gemacht"), Eingestellt("Eingestellt");
 
         String name;
-       Bewerberstatus(String name)
-        {
-            this.name=name;
+
+        Bewerberstatus(String name) {
+            this.name = name;
         }
 
         public String getName() {

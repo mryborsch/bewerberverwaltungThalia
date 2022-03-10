@@ -9,13 +9,11 @@ public class BewerberService {
 
     private final WebClient webClient;
 
-    public BewerberService(WebClient.Builder builder)
-    {
-        webClient= builder.baseUrl("http://localhost:8080/").build();
+    public BewerberService(WebClient.Builder builder) {
+        webClient = builder.baseUrl("http://localhost:8080/").build();
     }
 
-    public Bewerber[] getBewerber()
-    {
+    public Bewerber[] getBewerber() {
         return webClient
                 .get()
                 .uri("/bewerber")
@@ -23,17 +21,15 @@ public class BewerberService {
                 .bodyToMono(Bewerber[].class).block();
     }
 
-    public Bewerber getBewerberById(long id)
-    {
+    public Bewerber getBewerberById(long id) {
         return webClient.get()
-                .uri("/bewerber/"+id)
+                .uri("/bewerber/" + id)
                 .retrieve()
                 .bodyToMono(Bewerber.class).block();
 
     }
 
-    public Bewerber addBewerber(Bewerber bewerber)
-    {
+    public Bewerber addBewerber(Bewerber bewerber) {
         return webClient.post().
                 uri("/bewerber")
                 .syncBody(bewerber)
@@ -41,20 +37,19 @@ public class BewerberService {
                 .bodyToMono(Bewerber.class).block();
     }
 
-    public Bewerber updateBewerber(long id, Bewerber bewerber)
-    {
+    public Bewerber updateBewerber(long id, Bewerber bewerber) {
         System.out.println(id);
         return webClient.put()
-                .uri("/bewerber/"+id)
+                .uri("/bewerber/" + id)
                 .syncBody(bewerber)
                 .retrieve()
                 .bodyToMono(Bewerber.class)
                 .block();
     }
-    public String deleteBewerber(long id)
-    {
+
+    public String deleteBewerber(long id) {
         return webClient.delete()
-                .uri("/bewerber/"+id)
+                .uri("/bewerber/" + id)
                 .retrieve()
                 .bodyToMono(String.class)
                 .block();

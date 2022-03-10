@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BewerberverwaltungApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BewerberverwaltungApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BewerberverwaltungApplication.class, args);
+    }
 
 }
